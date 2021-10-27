@@ -231,7 +231,7 @@ public class Template {
      * @return a new Template instance from a given input string.
      */
     public static Template parse(String input) {
-        return new Template(input, Tag.getTags(), Filter.getFilters(ParseSettings.DEFAULT_FLAVOR), new ParseSettings.Builder().build());
+        return new Template(input, Tag.getTags(ParseSettings.DEFAULT_FLAVOR), Filter.getFilters(ParseSettings.DEFAULT_FLAVOR), new ParseSettings.Builder().build());
     }
 
     /**
@@ -243,31 +243,31 @@ public class Template {
      * @return a new Template instance from a given input file.
      */
     public static Template parse(File file) throws IOException {
-        return new Template(file, Tag.getTags(), Filter.getFilters(ParseSettings.DEFAULT_FLAVOR), new ParseSettings.Builder().build());
+        return new Template(file, Tag.getTags(ParseSettings.DEFAULT_FLAVOR), Filter.getFilters(ParseSettings.DEFAULT_FLAVOR), new ParseSettings.Builder().build());
     }
 
     public static Template parse(File file, ParseSettings settings) throws IOException {
-        return new Template(file, Tag.getTags(), Filter.getFilters(settings.flavor), settings);
+        return new Template(file, Tag.getTags(settings.flavor), Filter.getFilters(settings.flavor), settings);
     }
 
     public static Template parse(String input, ParseSettings settings) {
-        return new Template(input, Tag.getTags(), Filter.getFilters(settings.flavor), settings);
+        return new Template(input, Tag.getTags(settings.flavor), Filter.getFilters(settings.flavor), settings);
     }
 
     public static Template parse(File file, ParseSettings parseSettings, RenderSettings renderSettings) throws IOException {
-        return new Template(file, Tag.getTags(), Filter.getFilters(parseSettings.flavor), parseSettings, renderSettings);
+        return new Template(file, Tag.getTags(parseSettings.flavor), Filter.getFilters(parseSettings.flavor), parseSettings, renderSettings);
     }
 
     public static Template parse(String  template, ParseSettings parseSettings, RenderSettings renderSettings) {
-        return new Template(template, Tag.getTags(), Filter.getFilters(parseSettings.flavor), parseSettings, renderSettings);
+        return new Template(template, Tag.getTags(parseSettings.flavor), Filter.getFilters(parseSettings.flavor), parseSettings, renderSettings);
     }
 
     public static Template parse(InputStream input) {
-        return new Template(input, Tag.getTags(), Filter.getFilters(ParseSettings.DEFAULT_FLAVOR), new ParseSettings.Builder().build());
+        return new Template(input, Tag.getTags(ParseSettings.DEFAULT_FLAVOR), Filter.getFilters(ParseSettings.DEFAULT_FLAVOR), new ParseSettings.Builder().build());
     }
 
     public static Template parse(InputStream input, ParseSettings settings) {
-        return new Template(input, Tag.getTags(), Filter.getFilters(settings.flavor), settings);
+        return new Template(input, Tag.getTags(settings.flavor), Filter.getFilters(settings.flavor), settings);
     }
 
     @Deprecated // Use `parse(file, settings)` instead

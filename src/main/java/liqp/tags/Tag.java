@@ -3,6 +3,7 @@ package liqp.tags;
 import liqp.LValue;
 import liqp.TemplateContext;
 import liqp.nodes.LNode;
+import liqp.parser.Flavor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ public abstract class Tag extends LValue {
      * A map holding all tags.
      */
     private static final Map<String, Tag> TAGS = new HashMap<String, Tag>();
+    private static final Map<String, Tag> JEKYLL_TAGS = new HashMap<String, Tag>();
 
     static {
         // Register all standard tags.
@@ -35,6 +37,11 @@ public abstract class Tag extends LValue {
         registerTag(new Raw());
         registerTag(new Tablerow());
         registerTag(new Unless());
+    }
+    
+    static {
+        IncludeRelative includeRelative = new IncludeRelative();
+        JEKYLL_TAGS.put(includeRelative.name, includeRelative);
     }
 
     /**
@@ -77,6 +84,14 @@ public abstract class Tag extends LValue {
         }
 
         return tag;
+    }
+
+    public static Map<String, Tag> getTags(Flavor flavor) {
+        HashMap<String, Tag> tags = new HashMap<>(TAGS);
+        if (Flavor.JEKYLL == flavor) {
+            tags.putAll(JEKYLL_TAGS);
+        }
+        return tags;
     }
 
     /**

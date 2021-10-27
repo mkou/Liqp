@@ -11,24 +11,25 @@ public class Include extends Tag {
     public static final String INCLUDES_DIRECTORY_KEY = "liqp@includes_directory";
     public static String DEFAULT_EXTENSION = ".liquid";
 
+    protected Include(String name) {
+        super(name);
+    }
+    
+    public Include() {
+        super();
+    }
+    
     @Override
     public Object render(TemplateContext context, LNode... nodes) {
 
         try {
             String includeResource = super.asString(nodes[0].render(context), context);
+            // todo: are both liquid and jekyll uses same default extension?
             String extension = DEFAULT_EXTENSION;
             if(includeResource.indexOf('.') > 0) {
                 extension = "";
             }
-            File includeResourceFile;
-            String includesDirectory = (String) context.get(INCLUDES_DIRECTORY_KEY);
-
-            if (includesDirectory != null) {
-                includeResourceFile = new File(includesDirectory, includeResource + extension);
-            }
-            else {
-              includeResourceFile = new File(context.parseSettings.flavor.snippetsFolderName, includeResource + extension);
-            }
+            File includeResourceFile = getIncludeResourceFile(context, includeResource, extension);
 
             Template template = Template.parse(includeResourceFile, context.parseSettings, context.renderSettings);
 
@@ -47,5 +48,18 @@ public class Include extends Tag {
                 return "";
             }
         }
+    }
+
+    protected File getIncludeResourceFile(TemplateContext context, String includeResource, String extension) {
+        File includeResourceFile;
+        String includesDirectory = (String) context.get(INCLUDES_DIRECTORY_KEY);
+
+        if (includesDirectory != null) {
+            includeResourceFile = new File(includesDirectory, includeResource + extension);
+        }
+        else {
+          includeResourceFile = new File(context.parseSettings.flavor.snippetsFolderName, includeResource + extension);
+        }
+        return includeResourceFile;
     }
 }
