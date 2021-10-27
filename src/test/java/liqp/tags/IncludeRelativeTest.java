@@ -33,6 +33,7 @@ public class IncludeRelativeTest {
         // todo: if running from variable in ruby script what is taken as a base?
         // 1) working dir?
         // 2) script folder location?
+        // 3) java case: .class vs .jar
         Template template = Template.parse("{% include_relative snippets/header.html %}", jekyll());
         String render = template.render();
         assertEquals("HEADER\n", render);
